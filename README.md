@@ -253,3 +253,78 @@ df['MINIMUM_PAYMENTS'].fillna(df['MINIMUM_PAYMENTS'].median(), inplace=True)
 df.describe().T
 ```
 
+## Modeling
+
+Langkah awal yang akan saya lakukan adalah menggunakan sebuah alat (scaler) dalam library scikit-learn yang digunakan untuk mentransformasi dataset agar memiliki rata-rata nol dan deviasi standar satu.
+
+```bash
+X = df.values[:]
+X = np.nan_to_num(X)
+scaled_X = StandardScaler().fit_transform(X)
+scaled_X
+```
+
+Sekarang saya akan nmencari elbownya.
+
+```bash
+inertia_values = []
+for i in range(1, 11):
+    kmeans = KMeans(n_clusters=i).fit(scaled_X)
+    inertia_values.append(kmeans.inertia_)
+
+fig, ax = plt.subplots(figsize=(12, 8))
+sns.lineplot(x=list(range(1, 11)), y=inertia_values, ax=ax)
+ax.set_title('Mencari Elbow')
+ax.set_xlabel('Clusters')
+ax.set_ylabel('Inertia')
+
+plt.show()
+```
+
+Disini saya akan memakai n_cluster=3 untuk modellingnya.
+
+```bash
+kmeans = KMeans(n_clusters=3).fit(scaled_X)
+print(kmeans.cluster_centers_)
+kmeans_labels = kmeans.labels_
+```
+
+dan menambahkan kolom baru bernama Cluster ke df.
+
+```bash
+clusters_kmeans = kmeans.labels_ + 1
+df["cluster"] = clusters_kmeans
+df.head()
+```
+
+## Evaluation
+
+Berdasarkan hasil dari kode dibawah, didapatkan n_clusters=3, the silhouette score is 0.2506116638886035. Dalam Silhouette Coefficient, semakin tinggi skornya, semakin baik. Skor Silhouette berkisar antara -1 hingga 1, Skor Positif Tinggi (dekat +1): Ini menunjukkan bahwa klaster tersebut merupakan klaster yang baik.
+
+```bash
+range_n_clusters = [2, 3, 4, 5, 6, 7, 8]
+
+for num_clusters in range_n_clusters:
+    # intialise kmeans
+    kmeans = KMeans(n_clusters=num_clusters)
+    kmeans.fit(scaled_X)
+
+    cluster_labels = kmeans.labels_
+
+    # silhouette score
+    silhouette_avg = silhouette_score(scaled_X, cluster_labels)
+    print("For n_clusters={0}, the silhouette score is {1}".format(num_clusters, silhouette_avg))
+
+# For n_clusters=2, the silhouette score is 0.20951389891150402
+# For n_clusters=3, the silhouette score is 0.25063686531646423
+# For n_clusters=4, the silhouette score is 0.19797118701242603
+# For n_clusters=5, the silhouette score is 0.19327119581091734
+# For n_clusters=6, the silhouette score is 0.20273049886535538
+# For n_clusters=7, the silhouette score is 0.20816099649668712
+# For n_clusters=8, the silhouette score is 0.21289020202242545
+```
+
+## Deployment
+
+Berikut link menuju app [Segmentasi Pelanggan Berdasarkan Penggunaan Kartu Kredit](https://uas-kmeans-card-satrio-malamb.streamlit.app/)
+![Alt text](deploy-app.png)
