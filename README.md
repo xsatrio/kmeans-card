@@ -155,6 +155,8 @@ plt.title('Distribution of Purchases', size=20)
 plt.xlabel('Purchases')
 ```
 
+![Alt text](1.png)
+
 Saya juga akan menunjukkan distribusi pembelian satu kali (One Off Purchase) dan distribusi pembelian cicilan (Installment Purchase) dari DataFrame df.
 
 ```bash
@@ -174,12 +176,16 @@ axes[1].set_xlabel('Amount')
 plt.show()
 ```
 
+![Alt text](2.png)
+
 Saya juga ingin membuat heatmap. Warna pada heatmap menggambarkan tingkat korelasi, di mana warna yang lebih terang menunjukkan korelasi yang lebih tinggi, sedangkan warna yang lebih gelap menunjukkan korelasi yang lebih rendah atau tidak ada korelasi.
 
 ```bash
 plt.figure(figsize=(10, 8))
 sns.heatmap(df.corr())
 ```
+
+![Alt text](3.png)
 
 Saya akan membuat diagram lingkaran (pie chart) yang membandingkan persentase total saldo dan total pembelian dalam dataset.
 
@@ -206,6 +212,8 @@ plt.title('Percentage Comparison of Balance and Purchases')
 plt.show()
 ```
 
+![Alt text](4.png)
+
 Kode dibawah ini digunakan untuk membuat diagram batang (bar chart) yang membandingkan rata-rata frekuensi saldo (BALANCE_FREQUENCY) dan rata-rata frekuensi pembelian (PURCHASES_FREQUENCY) dalam dataset. Warna biru digunakan untuk kategori 'BALANCE_FREQUENCY', sedangkan warna hijau digunakan untuk kategori 'PURCHASES_FREQUENCY'.
 
 ```bash
@@ -220,6 +228,8 @@ plt.ylabel('Mean Frequency')
 plt.title('Comparison of BALANCE_FREQUENCY and PURCHASES_FREQUENCY')
 plt.show()
 ```
+
+![Alt text](5.png)
 
 lalu saya akan membandingkan distribusi dari BALANCE_FREQUENCY dengan PURCHASES_FREQUENCY
 
@@ -239,8 +249,33 @@ plt.title('Distribution of PURCHASES_FREQUENCY')
 
 plt.tight_layout()
 plt.show()
-
 ```
+
+![Alt text](6.png)
+
+Scatter plot dibawah ini dapat membantu mengidentifikasi apakah pengguna dengan saldo yang tinggi cenderung melakukan pembelian dalam jumlah besar atau sebaliknya.
+
+```bash
+plt.figure(figsize=(10, 8))
+sns.scatterplot(x=scaled_X[:, 0], y=scaled_X[:, 2], hue=clusters_kmeans, palette=sns.color_palette('hls', n_colors=len(np.unique(clusters_kmeans))), marker='o', s=50)
+
+for label in np.unique(clusters_kmeans):
+    plt.annotate(label,
+                 (scaled_X[clusters_kmeans == label, 0].mean(),
+                  scaled_X[clusters_kmeans == label, 2].mean()),
+                 horizontalalignment='center',
+                 verticalalignment='center',
+                 size=20, weight='bold',
+                 color='black')
+
+plt.xlabel('BALANCE')
+plt.ylabel('PURCHASES')
+plt.title('Cluster Plot with Cluster Centers')
+plt.legend()
+plt.show()
+```
+
+![Alt text](8.png)
 
 Pada tahap preprocessing ini, saya hanya akan drop feature CUST_ID dan mengisi data null dengan median.
 
@@ -281,6 +316,8 @@ ax.set_ylabel('Inertia')
 plt.show()
 ```
 
+![Alt text](7.png)
+
 Disini saya akan memakai n_cluster=3 untuk modellingnya.
 
 ```bash
@@ -315,6 +352,7 @@ for num_clusters in range_n_clusters:
     silhouette_avg = silhouette_score(scaled_X, cluster_labels)
     print("For n_clusters={0}, the silhouette score is {1}".format(num_clusters, silhouette_avg))
 
+# Output :
 # For n_clusters=2, the silhouette score is 0.20951389891150402
 # For n_clusters=3, the silhouette score is 0.25063686531646423
 # For n_clusters=4, the silhouette score is 0.19797118701242603
