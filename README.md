@@ -1,4 +1,4 @@
-# Laporan Proyek Machine Learning (Segmentasi Pelanggan Berdasarkan Penggunaan Kartu Kredit)
+# Laporan Proyek Machine Learning (Aplikasi Segmentasi Pelanggan Berdasarkan Penggunaan Kartu Kredit)
 
 ### Nama : Satrio Mukti Prayoga
 
