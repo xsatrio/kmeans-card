@@ -126,3 +126,130 @@ Setelah saya cek feature yang ada, saya juga ingin mengetahui 5 baris data awal 
 ```bash
 df.head()
 ```
+
+Setelah itu, saya ingin melihat berapa data null yang ada pada dataset dan pada feature apa saja data null tersebut berada.
+
+```bash
+df.isnull().sum()
+```
+
+Saya juga harus tau tipe data pada setiap masing masing feature/column.
+
+```bash
+df.info()
+```
+
+Disini saya akan menampilkan count, mean, std, min dan max pada dataset.
+
+```bash
+df.describe().T
+```
+
+Disini saya akan membuat visualisasi distribusi pembelian (Purchases) dalam DataFrame df.
+
+```bash
+plt.figure(figsize=(10, 8))
+
+sns.distplot(df['PURCHASES'], color='orange', bins=150)
+plt.title('Distribution of Purchases', size=20)
+plt.xlabel('Purchases')
+```
+
+Saya juga akan menunjukkan distribusi pembelian satu kali (One Off Purchase) dan distribusi pembelian cicilan (Installment Purchase) dari DataFrame df.
+
+```bash
+# Create a figure with subplots
+fig, axes = plt.subplots(1, 2, figsize=(15, 6))
+
+# Plot the first subplot
+sns.distplot(df['ONEOFF_PURCHASES'], color='green', ax=axes[0])
+axes[0].set_title('Distribution of One Off Purchase', fontsize=20)
+axes[0].set_xlabel('Amount')
+
+# Plot the second subplot
+sns.distplot(df['INSTALLMENTS_PURCHASES'], color='red', ax=axes[1])
+axes[1].set_title('Distribution of Installment Purchase', fontsize=20)
+axes[1].set_xlabel('Amount')
+
+plt.show()
+```
+
+Saya juga ingin membuat heatmap. Warna pada heatmap menggambarkan tingkat korelasi, di mana warna yang lebih terang menunjukkan korelasi yang lebih tinggi, sedangkan warna yang lebih gelap menunjukkan korelasi yang lebih rendah atau tidak ada korelasi.
+
+```bash
+plt.figure(figsize=(10, 8))
+sns.heatmap(df.corr())
+```
+
+Saya akan membuat diagram lingkaran (pie chart) yang membandingkan persentase total saldo dan total pembelian dalam dataset.
+
+```bash
+# Ambil data saldo dan pembelian
+balance_sum = df['BALANCE'].sum()
+purchases_sum = df['PURCHASES'].sum()
+
+# Hitung persentase
+balance_percentage = (balance_sum / (balance_sum + purchases_sum)) * 100
+purchases_percentage = (purchases_sum / (balance_sum + purchases_sum)) * 100
+
+# Data untuk plot
+labels = ['Balance', 'Purchases']
+sizes = [balance_percentage, purchases_percentage]
+colors = ['lightblue', 'lightgreen']
+
+# Plot pie chart
+plt.figure(figsize=(10, 8))
+
+plt.pie(sizes, labels=labels, colors=colors, autopct='%1.1f%%', startangle=90)
+plt.axis('equal')  # Memastikan lingkaran berbentuk bulat
+plt.title('Percentage Comparison of Balance and Purchases')
+plt.show()
+```
+
+Kode dibawah ini digunakan untuk membuat diagram batang (bar chart) yang membandingkan rata-rata frekuensi saldo (BALANCE_FREQUENCY) dan rata-rata frekuensi pembelian (PURCHASES_FREQUENCY) dalam dataset. Warna biru digunakan untuk kategori 'BALANCE_FREQUENCY', sedangkan warna hijau digunakan untuk kategori 'PURCHASES_FREQUENCY'.
+
+```bash
+# Data untuk plot
+categories = ['BALANCE_FREQUENCY', 'PURCHASES_FREQUENCY']
+values = [df['BALANCE_FREQUENCY'].mean(), df['PURCHASES_FREQUENCY'].mean()]
+
+# Plot bar chart
+plt.figure(figsize=(10, 8))
+plt.bar(categories, values, color=['blue', 'green'])
+plt.ylabel('Mean Frequency')
+plt.title('Comparison of BALANCE_FREQUENCY and PURCHASES_FREQUENCY')
+plt.show()
+```
+
+lalu saya akan membandingkan distribusi dari BALANCE_FREQUENCY dengan PURCHASES_FREQUENCY
+
+```bash
+# Plot histogram
+plt.figure(figsize=(12, 6))
+
+# Distribusi BALANCE_FREQUENCY
+plt.subplot(1, 2, 1)
+sns.histplot(df['BALANCE_FREQUENCY'], kde=True, bins=30, color='blue')
+plt.title('Distribution of BALANCE_FREQUENCY')
+
+# Distribusi PURCHASES_FREQUENCY
+plt.subplot(1, 2, 2)
+sns.histplot(df['PURCHASES_FREQUENCY'], kde=True, bins=30, color='green')
+plt.title('Distribution of PURCHASES_FREQUENCY')
+
+plt.tight_layout()
+plt.show()
+
+```
+
+Pada tahap preprocessing ini, saya hanya akan drop feature CUST_ID dan mengisi data null dengan median.
+
+```bash
+df.drop(['CUST_ID'], axis=1, inplace=True)
+
+df['CREDIT_LIMIT'].fillna(df['CREDIT_LIMIT'].median(), inplace=True)
+df['MINIMUM_PAYMENTS'].fillna(df['MINIMUM_PAYMENTS'].median(), inplace=True)
+
+df.describe().T
+```
+
