@@ -36,24 +36,24 @@ Link Dataset : [Card Usage](https://www.kaggle.com/datasets/noordeen/card-usage/
 
 ### Variabel-variabel pada Dataset ini adalah sebagai berikut:
 
-- CUST_ID: Identifikasi pemegang kartu kredit (Kategorikal)
-- BALANCE: Jumlah saldo yang tersisa di akun mereka untuk melakukan pembelian
-- BALANCE_FREQUENCY: Seberapa sering Saldo diperbarui, skor antara 0 dan 1 (1 = diperbarui secara sering, 0 = tidak diperbarui secara sering)
-- PURCHASES: Jumlah pembelian yang dibuat dari akun
-- ONEOFF_PURCHASES: Jumlah pembelian maksimum yang dilakukan sekaligus
-- INSTALLMENTS_PURCHASES: Jumlah pembelian yang dilakukan secara cicilan
-- CASH_ADVANCE: Uang tunai yang diberikan oleh pengguna
-- PURCHASES_FREQUENCY: Seberapa sering pembelian dilakukan, skor antara 0 dan 1 (1 = sering dibeli, 0 = tidak sering dibeli)
-- ONEOFF_PURCHASES_FREQUENCY: Seberapa sering pembelian dilakukan sekaligus (1 = sering dibeli, 0 = tidak sering dibeli)
-- PURCHASES_INSTALLMENTS_FREQUENCY: Seberapa sering pembelian dalam cicilan dilakukan (1 = sering dilakukan, 0 = tidak sering dilakukan)
-- CASH_ADVANCE_FREQUENCY: Seberapa sering uang tunai di muka dibayar
-- CASH_ADVANCE_TRX: Jumlah transaksi yang dilakukan dengan "Cash in Advanced"
-- PURCHASES_TRX: Jumlah transaksi pembelian yang dilakukan
-- CREDIT_LIMIT: Batas Kartu Kredit untuk pengguna
-- PAYMENTS: Jumlah pembayaran yang dilakukan oleh pengguna
-- MINIMUM_PAYMENTS: Jumlah pembayaran minimum yang dilakukan oleh pengguna
-- PRC_FULL_PAYMENT: Persentase pembayaran penuh yang dilakukan oleh pengguna
-- TENURE: Masa pelayanan kartu kredit untuk pengguna
+- CUST_ID: Identifikasi pemegang kartu kredit (Kategorikal) (object)
+- BALANCE: Jumlah saldo yang tersisa di akun mereka untuk melakukan pembelian (float64)
+- BALANCE_FREQUENCY: Seberapa sering Saldo diperbarui, skor antara 0 dan 1 (1 = diperbarui secara sering, 0 = tidak diperbarui secara sering) (float64)
+- PURCHASES: Jumlah pembelian yang dibuat dari akun (float64)
+- ONEOFF_PURCHASES: Jumlah pembelian maksimum yang dilakukan sekaligus (float64)
+- INSTALLMENTS_PURCHASES: Jumlah pembelian yang dilakukan secara cicilan (float64)
+- CASH_ADVANCE: Uang tunai yang diberikan oleh pengguna (float64)
+- PURCHASES_FREQUENCY: Seberapa sering pembelian dilakukan, skor antara 0 dan 1 (1 = sering dibeli, 0 = tidak sering dibeli) (float64)
+- ONEOFF_PURCHASES_FREQUENCY: Seberapa sering pembelian dilakukan sekaligus (1 = sering dibeli, 0 = tidak sering dibeli) (float64)
+- PURCHASES_INSTALLMENTS_FREQUENCY: Seberapa sering pembelian dalam cicilan dilakukan (1 = sering dilakukan, 0 = tidak sering dilakukan) (float64)
+- CASH_ADVANCE_FREQUENCY: Seberapa sering uang tunai di muka dibayar (float64)
+- CASH_ADVANCE_TRX: Jumlah transaksi yang dilakukan dengan "Cash in Advanced"(int64)
+- PURCHASES_TRX: Jumlah transaksi pembelian yang dilakukan (int64)
+- CREDIT_LIMIT: Batas Kartu Kredit untuk pengguna (float64)
+- PAYMENTS: Jumlah pembayaran yang dilakukan oleh pengguna (float64)
+- MINIMUM_PAYMENTS: Jumlah pembayaran minimum yang dilakukan oleh pengguna (float64)
+- PRC_FULL_PAYMENT: Persentase pembayaran penuh yang dilakukan oleh pengguna (float64)
+- TENURE: Masa pelayanan kartu kredit untuk pengguna (int64)
 
 ## Data Preparation
 
